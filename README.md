@@ -5,7 +5,7 @@ user-auth module for Advanced Software Engineering
 原 src/main/java/SELab 迁移到 src/main/java/ase
 
 ## 环境
-- Java 1.8
+- openjdk 12
 - Mysql
 - Http请求使用RestTemplate
 
