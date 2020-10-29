@@ -103,7 +103,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>UserAuthApplication</mainClass>
+                    <mainClass>ase.UserAuthApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
