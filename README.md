@@ -37,7 +37,10 @@ user-auth module for Advanced Software Engineering
 - [ ] 对应的domain
 
 2.待增加（url待定）
-- [ ] findByUsername 
-- [ ] findById
-- [ ] findByFullnameAndEmail
-- [ ] preAuth
+- [ ] findByUsername (user)
+- [ ] findById (user)
+- [ ] findByFullnameAndEmail (user)
+- [ ] preAuth (any request)
+- [ ] addPostMessage (PostMessage)
+- [ ] findByArticleIdAndStatus (PostMessage)
+- [ ] findById (PostMessage)
