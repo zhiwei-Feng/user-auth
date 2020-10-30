@@ -12,10 +12,11 @@ user-auth module for Advanced Software Engineering
 ## 待办
 1.迁移
 - controller
-- [ ] /util/users
-- [ ] /user/userinfo
-- [ ] /login
-- [ ] /register
+- [ ] /utils/pdf
+- [x] /util/users
+- [x] /user/userinfo
+- [x] /login
+- [x] /register
 - [ ] /user/articleDetail
 - [ ] /user/articleSubmission
 - [ ] /user/updateArticles
