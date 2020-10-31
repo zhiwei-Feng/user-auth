@@ -90,9 +90,9 @@ public class Service {
     }
 
 
-    public ResponseWrapper<?> getArticleDetail(String articleId) {
+    public ResponseWrapper<?> getArticleDetail(String articleId, String token) {
         logger.debug("service for article detail called. article id = " + articleId);
-        return userArticleService.getArticleDetail(articleId);
+        return userArticleService.getArticleDetail(articleId, token);
     }
 
 

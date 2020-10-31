@@ -19,7 +19,9 @@ public class UtilController {
     private Service service;
 
     @Autowired
-    public UtilController(Service service) { this.service = service;}
+    public UtilController(Service service) {
+        this.service = service;
+    }
 
     @GetMapping("/welcome")
     public ResponseEntity<?> welcome() {
@@ -57,8 +59,13 @@ public class UtilController {
 
     @GetMapping("/utils/pdf")
     @ResponseBody
-    public byte[] getImage(String pdfUrl)  {
+    public byte[] getImage(String pdfUrl) {
         logger.debug("Get file for pdfUrl " + pdfUrl + " : ");
         return service.getPdfContent(pdfUrl);
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<String> check() {
+        return ResponseEntity.ok("pass");
     }
 }

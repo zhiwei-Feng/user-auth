@@ -6,7 +6,7 @@ import javafx.util.Pair;
 import java.util.Set;
 
 /**
- *  fengzw: only a class, not a database domain
+ * fengzw: only a class, not a database domain
  */
 public class Article {
     private Long id;
@@ -18,9 +18,10 @@ public class Article {
     private String filePath;
     private String status;//accepted/rejected/queuing
     private Set<String> topic;
-    private Set<Pair<Author,Integer>> authors;
+    private Set<Pair<Author, Integer>> authors;
 
-    public Article() {}
+    public Article() {
+    }
 
     public Article(String contributorName, String meetingName, String submitDate, String title, String articleAbstract, String filePath, String status, Set<String> topic, Set<Pair<Author, Integer>> authors) {
         this.contributorName = contributorName;
@@ -44,6 +45,10 @@ public class Article {
         this.status = article.getStatus();
         this.topic = article.getTopic();
         this.authors = article.getAuthors();
+    }
+
+    public Article(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

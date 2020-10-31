@@ -5,8 +5,10 @@ import ase.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class UserAuthApplication {
@@ -43,5 +45,10 @@ public class UserAuthApplication {
 
 
         };
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 }

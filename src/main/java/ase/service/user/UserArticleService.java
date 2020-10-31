@@ -1,5 +1,6 @@
 package ase.service.user;
 
+import ase.config.RemoteServiceConfig;
 import ase.domain.*;
 import ase.exception.InternalServerError;
 import ase.exception.MeetingUnavaliableToOperateException;
@@ -13,8 +14,10 @@ import ase.utility.response.ResponseGenerator;
 import ase.utility.response.ResponseWrapper;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -31,15 +35,29 @@ public class UserArticleService {
     private UserRepository userRepository;
 
     @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private RemoteServiceConfig remote;
+
+    @Autowired
     public UserArticleService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Transactional
-    public ResponseWrapper<?> getArticleDetail(String articleId) {
+    public ResponseWrapper<?> getArticleDetail(String articleId, String token) {
         // todo 调用article api，根据articleId获取对应article信息,set null temporarily
         // Article article = articleRepository.findById(Long.parseLong(articleId));
-        Article article = null;
+        String articleApi = remote.getFindArticleById();
+        // 构造请求头，加入token
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("authorization", token);
+        Map<String, String> params = new HashMap<>();
+        params.put("id", articleId);
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(params, httpHeaders);
+        ResponseEntity<Article> resp = restTemplate.exchange(articleApi, HttpMethod.GET, entity, Article.class);
+        Article article = resp.getBody();
+        // api 调用结束
         if (article == null) {
             throw new ArticleNotFoundException(articleId);
         }
