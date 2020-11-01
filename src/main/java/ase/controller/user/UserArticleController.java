@@ -58,58 +58,6 @@ public class UserArticleController {
         return ResponseEntity.ok(service.getArticleDetail(articleId, token));
     }
 
-    //user submit a new article for a meeting
-    @PostMapping("/user/articleSubmission")
-    public ResponseEntity<?> submitNewArticle(
-            @RequestParam("meetingName") String meetingName,
-            @RequestParam("username") String username,
-            @RequestParam("essayTitle") String essayTitle,
-            @RequestParam("essayAbstract") String essayAbstract,
-            @RequestParam("submitTime") String submitTime,
-            @RequestParam("topic") Set<String> topic,
-            @RequestParam("authors") String authors,
-            @RequestParam("essayPDF") MultipartFile pdfFile,
-            HttpServletRequest servletRequest
-
-    ) {
-
-        Set<Pair<Author, Integer>> authorArgument = generateAuthor(authors);
-
-        ArticleRequest request = new ArticleRequest(
-                meetingName, username, essayTitle, essayAbstract,
-                submitTime, pdfFile, topic, authorArgument
-        );
-        String parentDir = servletRequest.getServletContext().getRealPath("src/resources/");
-        return ResponseEntity.ok(service.submitNewArticle(request, parentDir));
-    }
-
-    //user update an existing paper
-    @PostMapping("/user/updateArticle")
-    public ResponseEntity<?> updateArticle(
-            @RequestParam("articleId") String articleId,
-            @RequestParam("meetingName") String meetingName,
-            @RequestParam("username") String username,
-            @RequestParam("essayTitle") String essayTitle,
-            @RequestParam("essayAbstract") String essayAbstract,
-            @RequestParam("submitTime") String submitTime,
-            @RequestParam("topic") Set<String> topic,
-            @RequestParam("authors") String authors,
-            @RequestParam(value = "essayPDF", required = false) MultipartFile pdfFile,
-            HttpServletRequest servletRequest
-
-    ) {
-        Set<Pair<Author, Integer>> authorArgument = generateAuthor(authors);
-
-        ArticleRequest request = new ArticleRequest(
-                meetingName, username, essayTitle, essayAbstract,
-                submitTime, pdfFile, topic, authorArgument
-        );
-
-
-        String parentDir = servletRequest.getServletContext().getRealPath("src/resources/static/");
-        return ResponseEntity.ok(service.updateArticle(articleId, request, parentDir));
-    }
-
 
     @GetMapping("/user/reviews")
     public ResponseEntity<?> getAllReviewsOfArticle(String articleId) {
