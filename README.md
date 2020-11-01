@@ -42,7 +42,7 @@ user-auth module for Advanced Software Engineering
 - [ ] 对应的domain
 
 2.待增加（url待定）
-- [ ] findByUsername (user)
+- [x] findByUsername (user), url=/user/userinfo
 - [ ] findById (user)
 - [ ] findByFullnameAndEmail (user)
 - [x] preAuth (any request), url=/check
