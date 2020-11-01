@@ -111,8 +111,9 @@ public class UtilService {
             throw new UserNamedidntExistException(username);
         }//邀请对象是否存在
         HashMap<String, HashMap<String, Object>> body = new HashMap<>();
+        // 增加了id属性
         HashMap<String, Object> response = ResponseGenerator.generate(user,
-                new String[]{"username", "fullname", "email", "institution", "region"}, null);
+                new String[]{"id", "username", "fullname", "email", "institution", "region"}, null);
 
         body.put("UserInformation", response);
         return new ResponseWrapper<>(200, ResponseGenerator.success, body);

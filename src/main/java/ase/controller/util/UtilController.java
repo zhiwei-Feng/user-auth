@@ -3,6 +3,8 @@ package ase.controller.util;
 import ase.request.util.LoginRequest;
 import ase.request.util.RegisterRequest;
 import ase.service.Service;
+import ase.utility.response.ResponseGenerator;
+import ase.utility.response.ResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +59,8 @@ public class UtilController {
         return ResponseEntity.ok(service.searchUsersbyFullname(fullname));
     }
 
-    @GetMapping("/utils/pdf")
-    @ResponseBody
-    public byte[] getImage(String pdfUrl) {
-        logger.debug("Get file for pdfUrl " + pdfUrl + " : ");
-        return service.getPdfContent(pdfUrl);
-    }
-
     @GetMapping("/check")
-    public ResponseEntity<String> check() {
-        return ResponseEntity.ok("pass");
+    public ResponseEntity<?> check() {
+        return ResponseEntity.ok(new ResponseWrapper<>(200, ResponseGenerator.success, null));
     }
 }

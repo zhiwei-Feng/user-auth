@@ -20,14 +20,11 @@ user-auth module for Advanced Software Engineering
 ## 待办
 1.迁移
 - controller
-- [ ] /utils/pdf
 - [x] /util/users
 - [x] /user/userinfo
 - [x] /login
 - [x] /register
 - [ ] /user/articleDetail
-- [ ] /user/articleSubmission
-- [ ] /user/updateArticles
 - [ ] /user/reviews
 - [ ] /user/undealedNotifications
 - [ ] /user/invitationRepo
@@ -48,7 +45,7 @@ user-auth module for Advanced Software Engineering
 - [ ] findByUsername (user)
 - [ ] findById (user)
 - [ ] findByFullnameAndEmail (user)
-- [ ] preAuth (any request)
+- [x] preAuth (any request), url=/check
 - [ ] addPostMessage (PostMessage)
 - [ ] findByArticleIdAndStatus (PostMessage)
 - [ ] findById (PostMessage)
