@@ -136,24 +136,6 @@ public class Service {
         return ret;
     }
 
-    public ResponseWrapper<?> submitNewArticle(ArticleRequest request, String rootDir) {
-        ResponseWrapper<?> ret = userArticleService.uploadNewArticle(request, rootDir);
-        if (ret.getResponseMessage().equals(ResponseGenerator.success)) {
-            logger.info("user " + request.getUsername() + " submit a essay title " + request.getEssayTitle()
-                    + " to meeting " + request.getMeetingName() + " at date " + new Date());
-        }
-        return ret;
-    }
-
-    public ResponseWrapper<?> updateArticle(String articleId, ArticleRequest request, String rootDir) {
-        ResponseWrapper<?> ret = userArticleService.updateExistedArticle(articleId, request, rootDir);
-        if (ret.getResponseMessage().equals((ResponseGenerator.success))) {
-            logger.info("user " + request.getUsername() + " update the article with id " +
-                    articleId + " at time " + new Date());
-        }
-        return ret;
-    }
-
     public ResponseWrapper<?> getReviewsOfArticle(String articleId) {
         ResponseWrapper<?> ret = userArticleService.getAllReviews(articleId);
         if (ret.getResponseMessage().equals(ResponseGenerator.success)) {
