@@ -46,6 +46,6 @@ user-auth module for Advanced Software Engineering
 - [ ] findById (user)
 - [ ] findByFullnameAndEmail (user)
 - [x] preAuth (any request), url=/check
-- [ ] addPostMessage (PostMessage)
-- [ ] findByArticleIdAndStatus (PostMessage)
-- [ ] findById (PostMessage)
+- [x] addPostMessage (PostMessage)
+- [x] findByArticleIdAndStatus (PostMessage)
+- [x] findById (PostMessage)
