@@ -43,8 +43,8 @@ user-auth module for Advanced Software Engineering
 
 2.待增加（url待定）
 - [x] findByUsername (user), url=/user/userinfo
-- [ ] findById (user)
-- [ ] findByFullnameAndEmail (user)
+- [x] findById (user)
+- [x] findByFullnameAndEmail (user)
 - [x] preAuth (any request), url=/check
 - [x] addPostMessage (PostMessage)
 - [x] findByArticleIdAndStatus (PostMessage)
