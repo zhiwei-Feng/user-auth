@@ -8,16 +8,27 @@ public class InvitationRepoRequest {
     private String response;
     private Set<String> topic;
 
-    public InvitationRepoRequest(){}
+    public InvitationRepoRequest() {
+    }
 
-    public InvitationRepoRequest(String username, String meetingName, String response, Set<String>topic){
+    @Override
+    public String toString() {
+        return "InvitationRepoRequest{" +
+                "username='" + username + '\'' +
+                ", meetingName='" + meetingName + '\'' +
+                ", response='" + response + '\'' +
+                ", topic=" + topic +
+                '}';
+    }
+
+    public InvitationRepoRequest(String username, String meetingName, String response, Set<String> topic) {
         this.username = username;
         this.meetingName = meetingName;
         this.response = response;
         this.topic = topic;
     }
 
-    public InvitationRepoRequest(InvitationRepoRequest invitationRepoRequest){
+    public InvitationRepoRequest(InvitationRepoRequest invitationRepoRequest) {
         this.username = invitationRepoRequest.getUsername();
         this.meetingName = invitationRepoRequest.getMeetingName();
         this.response = invitationRepoRequest.getResponse();

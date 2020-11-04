@@ -9,10 +9,7 @@ import ase.utility.contract.PCmemberRelationStatus;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -98,5 +95,48 @@ public class DemoController {
         meeting.setMeetingName("test meeting" + id);
 
         return ResponseEntity.ok(meeting);
+    }
+
+    @GetMapping("/demo/meeting/meetingName")
+    public ResponseEntity<?> findMeetingByMeetName(String meetingName) {
+        System.out.println("findMeetingByMeetName: " + meetingName);
+        Meeting meeting = new Meeting();
+        meeting.setId(1L);
+        meeting.setMeetingName(meetingName);
+
+        return ResponseEntity.ok(meeting);
+    }
+
+    @GetMapping("/demo/pcmemberrelation/pcmemberAndMeeting")
+    public ResponseEntity<?> findPcmemberRelationByPcmemberIdAndMeetingId(Long pcmemberId, Long meetingId) {
+        System.out.println("findPcmemberRelationByPcmemberIdAndMeetingId: " + pcmemberId + " " + meetingId);
+        List<PCMemberRelation> prList = new ArrayList<>();
+        PCMemberRelation pc = new PCMemberRelation();
+        pc.setId(1L);
+        pc.setPcmemberId(pcmemberId);
+        pc.setMeetingId(meetingId);
+        pc.setStatus(PCmemberRelationStatus.undealed);
+        pc.setTopic(new HashSet<>());
+        prList.add(pc);
+        return ResponseEntity.ok(prList);
+    }
+
+    @PutMapping("/demo/pcmemberrelation")
+    public ResponseEntity<?> updatePcmemberRelation(@RequestBody PCMemberRelation relation) {
+        PCMemberRelation pcMemberRelation = new PCMemberRelation();
+        pcMemberRelation.setId(relation.getId());
+        pcMemberRelation.setPcmemberId(relation.getPcmemberId());
+        pcMemberRelation.setMeetingId(relation.getMeetingId());
+        pcMemberRelation.setTopic(new HashSet<>());
+        pcMemberRelation.setStatus(PCmemberRelationStatus.undealed);
+
+        if (relation.getStatus() != null) {
+            pcMemberRelation.setStatus(relation.getStatus());
+        }
+        if (relation.getTopic() != null) {
+            pcMemberRelation.setTopic(relation.getTopic());
+        }
+        System.out.println("updatePcmemberRelation: " + pcMemberRelation);
+        return ResponseEntity.ok(pcMemberRelation);
     }
 }

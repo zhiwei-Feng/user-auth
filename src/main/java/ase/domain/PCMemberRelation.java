@@ -12,6 +12,18 @@ public class PCMemberRelation {
     private Long pcmemberId;
     private Long meetingId;
     private String status;
+
+    @Override
+    public String toString() {
+        return "PCMemberRelation{" +
+                "id=" + id +
+                ", pcmemberId=" + pcmemberId +
+                ", meetingId=" + meetingId +
+                ", status='" + status + '\'' +
+                ", topic=" + topic +
+                '}';
+    }
+
     private Set<String> topic;
 
     public PCMemberRelation() {

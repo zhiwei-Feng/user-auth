@@ -15,6 +15,9 @@ public class RemoteServiceConfig {
     private String findArticleById;
     private String findPcmemberByPcmemberIdAndStatus;
     private String findMeetingById;
+    private String findMeetingByMeetingName;
+    private String findPcmemberRelationByPcmemberIdAndMeetingId;
+    private String updatePcmemberRelation;
 
     public String getCheck() {
         return check;
@@ -46,5 +49,29 @@ public class RemoteServiceConfig {
 
     public void setFindMeetingById(String findMeetingById) {
         this.findMeetingById = findMeetingById;
+    }
+
+    public String getFindMeetingByMeetingName() {
+        return findMeetingByMeetingName;
+    }
+
+    public void setFindMeetingByMeetingName(String findMeetingByMeetingName) {
+        this.findMeetingByMeetingName = findMeetingByMeetingName;
+    }
+
+    public String getFindPcmemberRelationByPcmemberIdAndMeetingId() {
+        return findPcmemberRelationByPcmemberIdAndMeetingId;
+    }
+
+    public void setFindPcmemberRelationByPcmemberIdAndMeetingId(String findPcmemberRelationByPcmemberIdAndMeetingId) {
+        this.findPcmemberRelationByPcmemberIdAndMeetingId = findPcmemberRelationByPcmemberIdAndMeetingId;
+    }
+
+    public String getUpdatePcmemberRelation() {
+        return updatePcmemberRelation;
+    }
+
+    public void setUpdatePcmemberRelation(String updatePcmemberRelation) {
+        this.updatePcmemberRelation = updatePcmemberRelation;
     }
 }

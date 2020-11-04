@@ -9,12 +9,11 @@ import ase.utility.ApiUtil;
 import ase.utility.contract.PCmemberRelationStatus;
 import ase.utility.response.ResponseGenerator;
 import ase.utility.response.ResponseWrapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -42,7 +41,7 @@ public class UserInvitationService {
 
     public ResponseWrapper<?> undealedNotifications(String username) {
         Long userId = userRepository.findByUsername(username).getId();
-        // todo PCMemberRelation Api
+        // todo PCMemberRelation Api [初步完成]
         //List<PCMemberRelation> relationList = pcMemberRelationRepository.findByPcmemberIdAndStatus(userId, PCmemberRelationStatus.undealed);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("id", String.valueOf(userId));
@@ -59,7 +58,7 @@ public class UserInvitationService {
         HashMap<String, Set<HashMap<String, Object>>> body = new HashMap<>();
         Set<HashMap<String, Object>> response = new HashSet<>();
         for (PCMemberRelation relation : relationList) {
-            // todo meeting api
+            // todo meeting api [初步完成]
 //            Meeting meeting = meetingRepository.findById((long) relation.getMeetingId());
             MultiValueMap<String, String> p = new LinkedMultiValueMap<>();
             p.add("id", String.valueOf(relation.getMeetingId()));
@@ -82,20 +81,51 @@ public class UserInvitationService {
 
     public ResponseWrapper<?> invitationRepo(InvitationRepoRequest request) {
         Long userId = userRepository.findByUsername(request.getUsername()).getId();
-        // todo meeting api
+        // todo meeting api [初步完成]
 //        Long meetingId = meetingRepository.findByMeetingName(request.getMeetingName()).getId();
-        Long meetingId = 0L;
-        // todo PCMemberRelation Api
-//        List<PCMemberRelation> relationList = pcMemberRelationRepository.findByPcmemberIdAndMeetingId(userId, meetingId);
-        List<PCMemberRelation> relationList = new ArrayList<>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("meetingName", request.getMeetingName());
+        ResponseEntity<Meeting> resp = restTemplate.exchange(
+                apiUtil.encodeUriForGet(params, api.getFindMeetingByMeetingName()),
+                HttpMethod.GET,
+                null,
+                Meeting.class
+        );
 
+        Long meetingId = Objects.requireNonNull(resp.getBody()).getId();
+        // todo PCMemberRelation Api [初步完成]
+//        List<PCMemberRelation> relationList = pcMemberRelationRepository.findByPcmemberIdAndMeetingId(userId, meetingId);
+        params = new LinkedMultiValueMap<>();
+        params.add("pcmemberId", String.valueOf(userId));
+        params.add("meetingId", String.valueOf(meetingId));
+        ResponseEntity<List<PCMemberRelation>> res = restTemplate.exchange(
+                apiUtil.encodeUriForGet(params, api.getFindPcmemberRelationByPcmemberIdAndMeetingId()),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+        List<PCMemberRelation> relationList = res.getBody();
+        assert relationList != null;
+        // 实际上， relationList只有一个元素，因为pcmemberId和meetingId会构成联合主键
         for (PCMemberRelation relation : relationList) {
             if (relation.getStatus().equals(PCmemberRelationStatus.undealed)) {
                 relation.setStatus(request.getResponse());
                 if (request.getResponse().equals(PCmemberRelationStatus.accepted)) {
                     relation.setTopic(request.getTopics());
                 }
-                // todo PCMemberRelation Api
+                // todo PCMemberRelation Api [初步完成]
+                ObjectMapper oMapper = new ObjectMapper();
+                Map<String, Object> map = oMapper.convertValue(relation, new TypeReference<>() {
+                });
+                HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, new HttpHeaders());
+                ResponseEntity<PCMemberRelation> respEntity = restTemplate.exchange(
+                        api.getUpdatePcmemberRelation(),
+                        HttpMethod.PUT,
+                        entity,
+                        PCMemberRelation.class);
+                if (respEntity.getStatusCode() == HttpStatus.OK) {
+                    System.out.println("update pcmemberRelation success.");
+                }
                 // pcMemberRelationRepository.save(relation);
                 break;
             }

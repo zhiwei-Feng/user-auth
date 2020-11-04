@@ -42,10 +42,10 @@ user-auth module for Advanced Software Engineering
 - [ ] 对应的domain
 
 2.待增加（url待定）
-- [x] findByUsername (user), url=/user/userinfo
-- [x] findById (user)
-- [x] findByFullnameAndEmail (user)
-- [x] preAuth (any request), url=/check
-- [x] addPostMessage (PostMessage)
-- [x] findByArticleIdAndStatus (PostMessage)
-- [x] findById (PostMessage)
+- [x] findByUsername (user), url=/user/userinfo, method=GET
+- [x] findById (user), url=/user/id, method=GET
+- [x] findByFullnameAndEmail (user), url=/user/author, method=GET
+- [x] preAuth (any request), url=/check, method=GET
+- [x] addPostMessage (PostMessage), url=/postmessage, method=POST
+- [x] findByArticleIdAndStatus (PostMessage), url=/postmessage/article, method=GET
+- [x] findById (PostMessage), url=/postmessage/id, method=GET
