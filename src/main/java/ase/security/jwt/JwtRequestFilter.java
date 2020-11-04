@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         JwtTokenUtil jwtUtil = new JwtTokenUtil(new ase.security.jwt.JwtConfigProperties());//新建JwtTokenUtil实例用于Token校验
         final String authorizationHeader = request.getHeader("Authorization");
-        if (request.getServletPath().equals("/demo/article")) {
+        if (request.getServletPath().startsWith("/demo")) {
             filterChain.doFilter(request, response);
             return;
         }

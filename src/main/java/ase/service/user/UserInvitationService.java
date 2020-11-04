@@ -1,20 +1,39 @@
 package ase.service.user;
 
+import ase.config.RemoteServiceConfig;
 import ase.domain.Meeting;
 import ase.domain.PCMemberRelation;
 import ase.repository.*;
 import ase.request.user.InvitationRepoRequest;
+import ase.utility.ApiUtil;
 import ase.utility.contract.PCmemberRelationStatus;
 import ase.utility.response.ResponseGenerator;
 import ase.utility.response.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.rmi.Remote;
 import java.util.*;
 
 @Service
 public class UserInvitationService {
     private UserRepository userRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private RemoteServiceConfig api;
+    @Autowired
+    private ApiUtil apiUtil;
 
     @Autowired
     public UserInvitationService(UserRepository userRepository) {
@@ -25,13 +44,34 @@ public class UserInvitationService {
         Long userId = userRepository.findByUsername(username).getId();
         // todo PCMemberRelation Api
         //List<PCMemberRelation> relationList = pcMemberRelationRepository.findByPcmemberIdAndStatus(userId, PCmemberRelationStatus.undealed);
-        List<PCMemberRelation> relationList = new ArrayList<>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", String.valueOf(userId));
+        params.add("status", PCmemberRelationStatus.undealed);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, new HttpHeaders());
+        ResponseEntity<List<PCMemberRelation>> result = restTemplate.exchange(
+                apiUtil.encodeUriForGet(params, api.getFindPcmemberByPcmemberIdAndStatus()),
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        List<PCMemberRelation> relationList = Objects.requireNonNull(result.getBody());
         HashMap<String, Set<HashMap<String, Object>>> body = new HashMap<>();
         Set<HashMap<String, Object>> response = new HashSet<>();
         for (PCMemberRelation relation : relationList) {
             // todo meeting api
 //            Meeting meeting = meetingRepository.findById((long) relation.getMeetingId());
-            Meeting meeting = null;
+            MultiValueMap<String, String> p = new LinkedMultiValueMap<>();
+            p.add("id", String.valueOf(relation.getMeetingId()));
+            HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(p);
+            ResponseEntity<Meeting> res = restTemplate.exchange(
+                    apiUtil.encodeUriForGet(p, api.getFindMeetingById()),
+                    HttpMethod.GET,
+                    httpEntity,
+                    Meeting.class);
+
+            Meeting meeting = res.getBody();
+            assert meeting != null;
             HashMap<String, Object> invitationInfo = ResponseGenerator.generate(meeting,
                     new String[]{"meetingName", "chairName", "topic"}, null);
             response.add(invitationInfo);

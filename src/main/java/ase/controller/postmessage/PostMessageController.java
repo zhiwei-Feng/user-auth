@@ -22,6 +22,7 @@ public class PostMessageController {
 
     /**
      * 新增PostMessage
+     * 服务api
      *
      * @param postMessageRequest 请求体
      * @return ResponseEntity
@@ -33,6 +34,7 @@ public class PostMessageController {
 
     /**
      * 查找对应article下的属于status状态的PostMessage
+     * 服务api
      *
      * @param articleId field
      * @param status    field
@@ -45,6 +47,7 @@ public class PostMessageController {
 
     /**
      * 根据id查找PostMessage
+     * 服务api
      *
      * @param id 主键
      * @return ResponseEntity

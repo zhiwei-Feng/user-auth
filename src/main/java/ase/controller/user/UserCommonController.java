@@ -17,7 +17,7 @@ public class UserCommonController {
 
     /**
      * user findById
-     *
+     * 服务api
      * @param id 主键
      * @return ResponseEntity
      */
@@ -28,7 +28,7 @@ public class UserCommonController {
 
     /**
      * user findByFullnameAndEmail
-     *
+     * 服务api
      * @param fullname 对应field
      * @param email    对应field
      * @return ResponseEntity

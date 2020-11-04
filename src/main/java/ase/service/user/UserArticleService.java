@@ -8,6 +8,7 @@ import ase.exception.UserNamedidntExistException;
 import ase.exception.user.ArticleNotFoundException;
 import ase.repository.*;
 import ase.request.user.ArticleRequest;
+import ase.utility.ApiUtil;
 import ase.utility.contract.ArticleStatus;
 import ase.utility.contract.MeetingStatus;
 import ase.utility.response.ResponseGenerator;
@@ -17,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,24 +42,30 @@ public class UserArticleService {
     private RestTemplate restTemplate;
     @Autowired
     private RemoteServiceConfig remote;
+    @Autowired
+    private ApiUtil apiUtil;
 
     @Autowired
     public UserArticleService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    // todo 待定，有可能拆分出去
     @Transactional
     public ResponseWrapper<?> getArticleDetail(String articleId, String token) {
         // todo 调用article api，根据articleId获取对应article信息,set null temporarily
         // Article article = articleRepository.findById(Long.parseLong(articleId));
-        String articleApi = remote.getFindArticleById();
         // 构造请求头，加入token
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("authorization", token);
-        Map<String, String> params = new HashMap<>();
-        params.put("id", articleId);
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(params, httpHeaders);
-        ResponseEntity<Article> resp = restTemplate.exchange(articleApi, HttpMethod.GET, entity, Article.class);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", articleId);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, httpHeaders);
+        ResponseEntity<Article> resp = restTemplate.exchange(
+                apiUtil.encodeUriForGet(params, remote.getFindArticleById()),
+                HttpMethod.GET,
+                entity,
+                Article.class);
         Article article = resp.getBody();
         // api 调用结束
         if (article == null) {
@@ -63,7 +73,7 @@ public class UserArticleService {
         }
         HashMap<String, Object> returnMap = ResponseGenerator.generate(
                 article,
-                new String[]{"contributorName", "meetingName", "submitDate",
+                new String[]{"id", "contributorName", "meetingName", "submitDate",
                         "title", "articleAbstract", "filePath", "status"}, null
         );
         if (returnMap == null)
@@ -82,6 +92,7 @@ public class UserArticleService {
 
     }
 
+    // todo 待定，有可能拆分出去
     @Transactional
     public ResponseWrapper<?> getAllReviews(String articleId) {
         // todo article api
