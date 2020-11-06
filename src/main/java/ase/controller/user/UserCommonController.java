@@ -18,6 +18,7 @@ public class UserCommonController {
     /**
      * user findById
      * 服务api
+     *
      * @param id 主键
      * @return ResponseEntity
      */
@@ -29,6 +30,7 @@ public class UserCommonController {
     /**
      * user findByFullnameAndEmail
      * 服务api
+     *
      * @param fullname 对应field
      * @param email    对应field
      * @return ResponseEntity
@@ -36,5 +38,17 @@ public class UserCommonController {
     @GetMapping("/user/author")
     public ResponseEntity<?> findUserByFullnameAndEmail(String fullname, String email) {
         return ResponseEntity.ok(userService.findUserByFullnameAndEmail(fullname, email));
+    }
+
+    /**
+     * user findByUsername
+     * 服务api
+     *
+     * @param username 用户名
+     * @return ResponseEntity
+     */
+    @GetMapping("/user/username")
+    public ResponseEntity<?> findUserByUsername(String username) {
+        return ResponseEntity.ok(userService.findUserByUsername(username));
     }
 }

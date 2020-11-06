@@ -6,6 +6,8 @@ import ase.domain.Author;
 import ase.domain.Meeting;
 import ase.domain.PCMemberRelation;
 import ase.utility.contract.PCmemberRelationStatus;
+import ase.utility.response.ResponseGenerator;
+import ase.utility.response.ResponseWrapper;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -93,16 +95,20 @@ public class DemoController {
         Meeting meeting = new Meeting();
         meeting.setId(id);
         meeting.setMeetingName("test meeting" + id);
+        Set<String> topics1 = new HashSet<>();
+        topics1.add("machine learning");
+        topics1.add("deep learning");
+        meeting.setTopic(topics1);
 
         return ResponseEntity.ok(meeting);
     }
 
     @GetMapping("/demo/meeting/meetingName")
     public ResponseEntity<?> findMeetingByMeetName(String meetingName) {
-        System.out.println("findMeetingByMeetName: " + meetingName);
         Meeting meeting = new Meeting();
         meeting.setId(1L);
         meeting.setMeetingName(meetingName);
+        meeting.setAcronym(meetingName);
 
         return ResponseEntity.ok(meeting);
     }
@@ -138,5 +144,91 @@ public class DemoController {
         }
         System.out.println("updatePcmemberRelation: " + pcMemberRelation);
         return ResponseEntity.ok(pcMemberRelation);
+    }
+
+    @GetMapping("/demo/pcmemberrelation/not")
+    public ResponseEntity<?> findPcmemberRelationByPcmemberIdAndStatusNot(long id, String status) {
+        if (id != 1) {
+            return ResponseEntity.noContent().build();
+        }
+
+        PCMemberRelation instance = new PCMemberRelation();
+        instance.setId(1L);
+        instance.setMeetingId(1L);
+        instance.setPcmemberId(id);
+        instance.setStatus("other status");
+        Set<String> topics = new HashSet<>();
+        topics.add("machine learning");
+        topics.add("deep learning");
+        instance.setTopic(topics);
+
+
+        List<PCMemberRelation> resp = new ArrayList<>();
+        resp.add(instance);
+
+        return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/demo/meeting/chair")
+    public ResponseEntity<?> findMeetingByChairName(String chairName) {
+        if (chairName == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Meeting meeting1 = new Meeting();
+        meeting1.setId(1L);
+        meeting1.setMeetingName("test1");
+        meeting1.setChairName(chairName);
+
+        Meeting meeting2 = new Meeting();
+        meeting2.setId(2L);
+        meeting2.setMeetingName("test2");
+        meeting2.setChairName(chairName);
+
+        List<Meeting> meetings = new ArrayList<>();
+        meetings.add(meeting1);
+        meetings.add(meeting2);
+
+        return ResponseEntity.ok(meetings);
+    }
+
+    @GetMapping("/demo/article/contributor")
+    public ResponseEntity<?> findArticleByContributorName(String name) {
+        if (name == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<Article> articles = new ArrayList<>();
+
+        Article a1 = new Article();
+        a1.setId(1L);
+        a1.setContributorName(name);
+        a1.setTitle("article1");
+        a1.setMeetingname("test1");
+
+        Article a2 = new Article();
+        a2.setId(2L);
+        a2.setContributorName(name);
+        a2.setTitle("article2");
+        a2.setMeetingname("test2");
+
+        articles.add(a1);
+        articles.add(a2);
+
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/demo/meeting/chairnot")
+    public ResponseEntity<?> findMeetingByStatusAndChairNameNot(String status, String chairName) {
+        List<Meeting> meetings = new ArrayList<>();
+        Meeting m = new Meeting();
+        m.setId(1L);
+        m.setStatus(status);
+        m.setChairName(chairName + "not");
+        m.setMeetingName("test");
+        m.setAcronym("chairnot");
+        meetings.add(m);
+
+        return ResponseEntity.ok(meetings);
     }
 }

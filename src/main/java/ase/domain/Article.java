@@ -130,4 +130,20 @@ public class Article {
     public void setAuthors(Set<Pair<Author, Integer>> authors) {
         this.authors = authors;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", contributorName='" + contributorName + '\'' +
+                ", meetingName='" + meetingName + '\'' +
+                ", submitDate='" + submitDate + '\'' +
+                ", title='" + title + '\'' +
+                ", articleAbstract='" + articleAbstract + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", status='" + status + '\'' +
+                ", topic=" + topic +
+                ", authors=" + authors +
+                '}';
+    }
 }

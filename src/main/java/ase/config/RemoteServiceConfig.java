@@ -18,6 +18,10 @@ public class RemoteServiceConfig {
     private String findMeetingByMeetingName;
     private String findPcmemberRelationByPcmemberIdAndMeetingId;
     private String updatePcmemberRelation;
+    private String findPcmemberRelationByPcmemberIdAndStatusNot;
+    private String findMeetingByChairName;
+    private String findArticleByContributorName;
+    private String findMeetingByStatusAndChairNameNot;
 
     public String getCheck() {
         return check;
@@ -73,5 +77,37 @@ public class RemoteServiceConfig {
 
     public void setUpdatePcmemberRelation(String updatePcmemberRelation) {
         this.updatePcmemberRelation = updatePcmemberRelation;
+    }
+
+    public String getFindPcmemberRelationByPcmemberIdAndStatusNot() {
+        return findPcmemberRelationByPcmemberIdAndStatusNot;
+    }
+
+    public void setFindPcmemberRelationByPcmemberIdAndStatusNot(String findPcmemberRelationByPcmemberIdAndStatusNot) {
+        this.findPcmemberRelationByPcmemberIdAndStatusNot = findPcmemberRelationByPcmemberIdAndStatusNot;
+    }
+
+    public String getFindMeetingByChairName() {
+        return findMeetingByChairName;
+    }
+
+    public void setFindMeetingByChairName(String findMeetingByChairName) {
+        this.findMeetingByChairName = findMeetingByChairName;
+    }
+
+    public String getFindArticleByContributorName() {
+        return findArticleByContributorName;
+    }
+
+    public void setFindArticleByContributorName(String findArticleByContributorName) {
+        this.findArticleByContributorName = findArticleByContributorName;
+    }
+
+    public String getFindMeetingByStatusAndChairNameNot() {
+        return findMeetingByStatusAndChairNameNot;
+    }
+
+    public void setFindMeetingByStatusAndChairNameNot(String findMeetingByStatusAndChairNameNot) {
+        this.findMeetingByStatusAndChairNameNot = findMeetingByStatusAndChairNameNot;
     }
 }

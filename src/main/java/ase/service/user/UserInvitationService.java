@@ -135,9 +135,15 @@ public class UserInvitationService {
 
     public ResponseWrapper<?> undealedNotificationsNum(String username) {
         Long userId = userRepository.findByUsername(username).getId();
-        // todo PCMemberRelation Api
+        // todo PCMemberRelation Api [初步完成]
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", String.valueOf(userId));
+        params.add("status", PCmemberRelationStatus.undealed);
+        String uri = apiUtil.encodeUriForGet(params, api.getFindPcmemberByPcmemberIdAndStatus());
+        ResponseEntity<List<PCMemberRelation>> res = restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+        });
 //        List<PCMemberRelation> relationList = pcMemberRelationRepository.findByPcmemberIdAndStatus(userId, PCmemberRelationStatus.undealed);
-        List<PCMemberRelation> relationList = new ArrayList<>();
+        List<PCMemberRelation> relationList = Objects.requireNonNull(res.getBody());
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("undealedNotificationsNum", relationList.size());
@@ -146,19 +152,36 @@ public class UserInvitationService {
 
     public ResponseWrapper<?> alreadyDealedNotifications(String username) {
         Long userId = userRepository.findByUsername(username).getId();
-        // todo PCMemberRelation Api
+        // todo PCMemberRelation Api [初步完成]
         //List<PCMemberRelation> relationList1 = pcMemberRelationRepository.findByPcmemberIdAndStatusNot(userId, PCmemberRelationStatus.undealed);
-        List<PCMemberRelation> relationList1 = new ArrayList<>();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", String.valueOf(userId));
+        params.add("status", PCmemberRelationStatus.undealed);
+        ResponseEntity<List<PCMemberRelation>> res = restTemplate.exchange(
+                apiUtil.encodeUriForGet(params, api.getFindPcmemberRelationByPcmemberIdAndStatusNot()),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+
+        List<PCMemberRelation> relationList = Objects.requireNonNull(res.getBody());
 
         HashMap<String, Set<HashMap<String, Object>>> body = new HashMap<>();
         Set<HashMap<String, Object>> response = new HashSet<>();
-        for (PCMemberRelation relation : relationList1) {
+        for (PCMemberRelation relation : relationList) {
             HashMap<String, Object> invitaionInfo = ResponseGenerator.generate(relation,
                     new String[]{"status"}, null);
 
-            //todo meeting api
+            //todo meeting api [初步完成]
             //Meeting m =  meetingRepository.findById((long) relation.getMeetingId());
-            Meeting m = null;
+            params = new LinkedMultiValueMap<>();
+            params.add("id", String.valueOf(relation.getMeetingId()));
+            ResponseEntity<Meeting> resp = restTemplate.exchange(
+                    apiUtil.encodeUriForGet(params, api.getFindMeetingById()),
+                    HttpMethod.GET,
+                    null,
+                    Meeting.class);
+            Meeting m = Objects.requireNonNull(resp.getBody());
 
             invitaionInfo.put("meetingName", m.getMeetingName());
             invitaionInfo.put("chairName", m.getChairName());

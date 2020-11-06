@@ -40,16 +40,12 @@ public class PostMessageServiceImpl implements PostMessageService {
     @Override
     public ResponseWrapper<?> findPostMessageByArticleIdAndStatus(long articleId, String status) {
         List<PostMessage> postList = postRepository.findByArticleIdAndStatus(articleId, status);
-        Map<String, List<PostMessage>> respBody = new HashMap<>();
-        respBody.put("data", postList);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, respBody);
+        return new ResponseWrapper<>(200, ResponseGenerator.success, postList);
     }
 
     @Override
     public ResponseWrapper<?> findPostMessageById(Long id) {
         PostMessage message = postRepository.findById(id.longValue());
-        Map<String, PostMessage> respBody = new HashMap<>();
-        respBody.put("data", message);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, respBody);
+        return new ResponseWrapper<>(200, ResponseGenerator.success, message);
     }
 }

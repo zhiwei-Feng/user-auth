@@ -7,4 +7,6 @@ public interface UserService {
     ResponseWrapper<?> findUserById(long id);
 
     ResponseWrapper<?> findUserByFullnameAndEmail(String fullname, String email);
+
+    ResponseWrapper<?> findUserByUsername(String username);
 }

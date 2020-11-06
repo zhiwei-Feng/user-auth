@@ -22,16 +22,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseWrapper<?> findUserById(long id) {
         User user = userRepository.findById(id);
-        Map<String, User> respBody = new HashMap<>();
-        respBody.put("data", user);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, respBody);
+        return new ResponseWrapper<>(200, ResponseGenerator.success, user);
     }
 
     @Override
     public ResponseWrapper<?> findUserByFullnameAndEmail(String fullname, String email) {
         User authorUser = userRepository.findByFullnameAndEmail(fullname, email);
-        Map<String, User> respBody = new HashMap<>();
-        respBody.put("data", authorUser);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, respBody);
+        return new ResponseWrapper<>(200, ResponseGenerator.success, authorUser);
+    }
+
+    @Override
+    public ResponseWrapper<?> findUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return new ResponseWrapper<>(200, ResponseGenerator.success, user);
     }
 }
