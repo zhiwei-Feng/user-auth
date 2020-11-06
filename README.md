@@ -18,28 +18,31 @@ user-auth module for Advanced Software Engineering
 - Http请求使用RestTemplate
 
 ## 待办
+
+**等待接口协商联调**
+
 1.迁移
 - controller
 - [x] /util/users
 - [x] /user/userinfo
 - [x] /login
 - [x] /register
-- [ ] /user/articleDetail
-- [ ] /user/reviews
-- [ ] /user/undealedNotifications
-- [ ] /user/invitationRepo
-- [ ] /user/undealedNotificationsNum
-- [ ] /user/alreadyDealedNotifications
-- [ ] /user/chairMeeting
-- [ ] /user/pcMemberMeeting
-- [ ] /user/authorMeeting
-- [ ] /user/availableMeeting
+- [x] /user/articleDetail
+- [x] /user/reviews
+- [x] /user/undealedNotifications
+- [x] /user/invitationRepo
+- [x] /user/undealedNotificationsNum
+- [x] /user/alreadyDealedNotifications
+- [x] /user/chairMeeting
+- [x] /user/pcMemberMeeting
+- [x] /user/authorMeeting
+- [x] /user/availableMeeting
 - service
-- [ ] 对应的service
+- [x] 对应的service
 - repository
-- [ ] 对应的repository
+- [x] 对应的repository
 - domain 
-- [ ] 对应的domain
+- [x] 对应的domain
 
 2.待增加（url待定）
 - [x] findByUsername (user), url=/user/userinfo, method=GET
