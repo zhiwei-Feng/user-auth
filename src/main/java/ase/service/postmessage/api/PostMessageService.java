@@ -1,13 +1,16 @@
 package ase.service.postmessage.api;
 
+import ase.domain.PostMessage;
 import ase.request.postmessage.PostMessageRequest;
 import ase.utility.response.ResponseWrapper;
 
+import java.util.List;
+
 public interface PostMessageService {
 
-    public ResponseWrapper<?> addPostMessage(PostMessageRequest postMessageRequest);
+    public void addPostMessage(PostMessageRequest postMessageRequest);
 
-    public ResponseWrapper<?> findPostMessageByArticleIdAndStatus(long articleId, String status);
+    public List<PostMessage> findPostMessageByArticleIdAndStatus(long articleId, String status);
 
-    public ResponseWrapper<?> findPostMessageById(Long id);
+    public PostMessage findPostMessageById(Long id);
 }

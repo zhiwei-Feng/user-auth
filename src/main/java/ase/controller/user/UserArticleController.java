@@ -41,6 +41,7 @@ public class UserArticleController {
 
     //get the detailed information about a article
     @GetMapping("/user/articleDetail")
+    @Deprecated
     public ResponseEntity<?> getArticleDetail(String articleId, @RequestHeader("authorization") String token) {
         logger.debug("article detail get request received, article id = " + articleId);
         // 每个请求处理之前首先需要验证是否登录, 可能之后用aop来替代
@@ -60,6 +61,7 @@ public class UserArticleController {
 
 
     @GetMapping("/user/reviews")
+    @Deprecated
     public ResponseEntity<?> getAllReviewsOfArticle(String articleId) {
         return ResponseEntity.ok(service.getReviewsOfArticle(articleId));
     }

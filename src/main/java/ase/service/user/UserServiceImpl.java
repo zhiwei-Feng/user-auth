@@ -8,10 +8,6 @@ import ase.utility.response.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,20 +16,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public ResponseWrapper<?> findUserById(long id) {
-        User user = userRepository.findById(id);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, user);
+    public User findUserById(long id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public ResponseWrapper<?> findUserByFullnameAndEmail(String fullname, String email) {
-        User authorUser = userRepository.findByFullnameAndEmail(fullname, email);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, authorUser);
+    public User findUserByFullnameAndEmail(String fullname, String email) {
+        return userRepository.findByFullnameAndEmail(fullname, email);
     }
 
     @Override
-    public ResponseWrapper<?> findUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return new ResponseWrapper<>(200, ResponseGenerator.success, user);
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

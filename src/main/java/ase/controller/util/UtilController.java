@@ -5,6 +5,7 @@ import ase.request.util.RegisterRequest;
 import ase.service.Service;
 import ase.utility.response.ResponseGenerator;
 import ase.utility.response.ResponseWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class UtilController {
         return ResponseEntity.ok(service.register(request));
     }
 
+    @ApiOperation("登录")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         logger.debug("LoginForm: " + request.toString());

@@ -1,12 +1,13 @@
 package ase.service.user.api;
 
+import ase.domain.User;
 import ase.utility.response.ResponseWrapper;
 
 public interface UserService {
 
-    ResponseWrapper<?> findUserById(long id);
+    User findUserById(long id);
 
-    ResponseWrapper<?> findUserByFullnameAndEmail(String fullname, String email);
+    User findUserByFullnameAndEmail(String fullname, String email);
 
-    ResponseWrapper<?> findUserByUsername(String username);
+    User findUserByUsername(String username);
 }

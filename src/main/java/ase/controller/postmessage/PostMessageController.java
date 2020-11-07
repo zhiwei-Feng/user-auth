@@ -29,7 +29,7 @@ public class PostMessageController {
      */
     @PostMapping("/postmessage")
     public ResponseEntity<?> addPostMessage(@RequestBody PostMessageRequest postMessageRequest) {
-        return ResponseEntity.ok(postMessageService.addPostMessage(postMessageRequest));
+        return ResponseEntity.ok().build();
     }
 
     /**

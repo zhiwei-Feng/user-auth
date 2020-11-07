@@ -50,10 +50,10 @@ public class UserArticleService {
         this.userRepository = userRepository;
     }
 
-    // todo 待定，有可能拆分出去
+
     @Transactional
+    @Deprecated
     public ResponseWrapper<?> getArticleDetail(String articleId, String token) {
-        // todo 调用article api，根据articleId获取对应article信息,set null temporarily
         // Article article = articleRepository.findById(Long.parseLong(articleId));
         // 构造请求头，加入token
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -92,16 +92,14 @@ public class UserArticleService {
 
     }
 
-    // todo 待定，有可能拆分出去
     @Transactional
+    @Deprecated
     public ResponseWrapper<?> getAllReviews(String articleId) {
-        // todo article api
         //Article article = articleRepository.findById(Long.parseLong(articleId));
         Article article = null;
         if (article == null)
             throw new ArticleNotFoundException(articleId);
 
-        //todo 调用reviewRelation api获取对应的信息，暂时置空
 //        Set<ReviewRelation> allReviews = reviewRelationRepository.findReviewRelationsByArticleId(article.getId());
         Set<ReviewRelation> allReviews = new HashSet<>();
 
