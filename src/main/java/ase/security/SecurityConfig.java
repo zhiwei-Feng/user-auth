@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 模拟远程服务api
                 .antMatchers("/demo/**").permitAll()
                 // 服务间调用api不需要权限
-                .antMatchers("/user/author", "/user/id", "/postmessage/id", "/postmessage/article", "/postmessage").permitAll()
+                .antMatchers("/user/username", "/user/author", "/user/id", "/postmessage/id", "/postmessage/article", "/postmessage").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
 
                 .anyRequest().authenticated();

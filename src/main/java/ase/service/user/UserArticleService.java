@@ -59,7 +59,7 @@ public class UserArticleService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("authorization", token);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", articleId);
+        params.add("articleId", articleId);
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, httpHeaders);
         ResponseEntity<Article> resp = restTemplate.exchange(
                 apiUtil.encodeUriForGet(params, remote.getFindArticleById()),
