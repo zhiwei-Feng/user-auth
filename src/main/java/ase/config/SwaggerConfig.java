@@ -18,7 +18,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ase"))
+                .apis(RequestHandlerSelectors.basePackage("ase")) // Application的目录
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -26,8 +26,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("基于Swagger构建的Rest API文档")
-                .description("")
+                .title("User服务的Rest API文档")
+                .description("包含User和认证")
                 .version("1.0")
                 .build();
     }

@@ -5,6 +5,7 @@ import ase.service.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class UserInvitationController {
         this.service = service;
     }
 
+    @ApiOperation(value = "根据username来找用户下的")
     @GetMapping("/user/undealedNotifications")
     public ResponseEntity<?> undealedNotifications(String username) {
         logger.debug("Get undealedNotifications info : " + username);
